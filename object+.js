@@ -288,6 +288,7 @@
     // @Object.define({ spec }) <- works as normal extend.
     define : ( function(){
         function extend( Class ){
+            // TODO: Chain _extend hooks?
             Object.getPrototypeOf( Class.prototype ).constructor._extend( Class );
         }
 
