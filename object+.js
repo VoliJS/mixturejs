@@ -59,6 +59,19 @@
         return to;
     },
 
+    defaults : function( dest ){
+        for( var i = 1; i < arguments.length; i++ ){
+            var options = arguments[ i ];
+            Object.transform( dest, options, function( val, name ){
+                if( !dest.hasOwnProperty( name ) ){
+                    return val;
+                }
+            } );
+        }
+
+        return dest;
+    },
+
     // assign and transform object
     transform : function( dest, source, fun, context ){
         for( var name in source ){
@@ -149,7 +162,7 @@
                 Child = function Constructor(){ return Parent.apply( this, arguments ); };
             }
 
-            Object.assign( Child, Parent );
+            Object.defaults( Child, Parent );
 
             Child.prototype             = Object.create( Parent.prototype );
             Child.prototype.constructor = Child;
@@ -158,6 +171,11 @@
             protoProps && Child.define( protoProps, staticProps );
 
             return Child;
+        }
+
+        function _extend( Subclass ){
+            Subclass.__super__ = this.prototype;
+            Object.defaults( Subclass, this );
         }
 
         function warnOnError( value, name ){
@@ -251,13 +269,14 @@
 
                 Ctor.extend = extend;
                 Ctor.define = define;
+                Ctor._extend = _extend;
                 Ctor.prototype.initialize || ( Ctor.prototype.initialize = function(){} );
             }
         };
 
+        extend._extend = _extend;
         extend.attach( Class );
         extend.Class = Class;
-        extend.error = error;
 
         return extend;
     })(),
@@ -267,9 +286,24 @@
     // Invoke Object.extend metaprogramming hooks.
     // @Object.define <- works as forward definition
     // @Object.define({ spec }) <- works as normal extend.
-    define : function( specOrClass ){
-        // TODO
-    }
+    define : ( function(){
+        function extend( Class ){
+            Object.getPrototypeOf( Class.prototype ).constructor._extend( Class );
+        }
+
+        return function( Class ){
+            if( typeof Class === 'function' ){
+                extend( Class );
+            }
+            else{
+                var spec = Class;
+                return function( Class ){
+                    extend( Class );
+                    Class.define( spec );
+                }
+            }
+        }
+    } )()
 } );
 
 module.exports = Object.extend.Class;
