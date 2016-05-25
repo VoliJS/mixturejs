@@ -21,6 +21,12 @@ class More extends Nothing {
     b : {
         c : 1
     }
+},{
+    mixing : {
+        attributes : 'merge',
+        initialize : 'chain',
+        shouldComponentUpdate : 'or'
+    }
 })
 class NothingWithProps{
 
