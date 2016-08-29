@@ -7,7 +7,16 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test":  "",
+    "build": "node_modules/.bin/webpack && npm run docs",
+    "watch": "node_modules/.bin/webpack --watch",
+    "docs" : "typedoc --options typedoc.json ./src/"
+  },
+  "devDependencies": {
+    "ts-loader": "^0.8.2",
+    "source-map-loader" : "*",
+    "typescript": "^1.8.10",
+    "webpack": "^1.13.0"
   },
   "repository": {
     "type": "git",

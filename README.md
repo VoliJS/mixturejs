@@ -4,7 +4,7 @@ This is the core toolkit used by Type-R, NestedTypes, and NestedReact. Written i
 
 ## Status
 
-Pending. Awaiting Type-R to be released, then will be factored out and placed here.
+Beta. Mostly stable, some advanced functions may work wrong.
 
 ## Features
 
@@ -25,3 +25,5 @@ Pending. Awaiting Type-R to be released, then will be factored out and placed he
 - Object tools:
     - Simple logging wrapper around `console` with variable log-level and overridable functions.
     - Object manipulation tools (`assign`, `defaults`, `mapObject`, etc).
+
+API docs: [here](/docs/index.html)
