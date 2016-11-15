@@ -55,8 +55,8 @@ export interface Constructor< T >{
  * Generic interface to reference constructor function of any Mixable type T.
  */
 export interface MixableConstructor< T > extends Constructor< T >{
-    prototype : Mixable
-    create( a : any, b? : any ) : Mixable
+    prototype : T
+    create( a : any, b? : any ) : T
     mixins( ...mixins : ( Constructor<any> | {} )[] ) : MixableConstructor< T >
     mixinRules( mixinRules : MixinRules ) : MixableConstructor< T >
     mixTo( ...args : Constructor<any>[] ) : MixableConstructor< T >
@@ -79,6 +79,9 @@ export interface MixableConstructor< T > extends Constructor< T >{
  *      class A extends Mixable {}
  */ 
 export class Mixable {
+    constructor(){ this.initialize.apply( this, arguments ); }
+    initialize() : void {}
+
     /** Generic class factory. May be overridden for abstract classes. Not inherited. */
     static create( a : any, b? : any ) : Mixable {
         return new (<any>this)( a, b );
@@ -171,7 +174,7 @@ export class Mixable {
     static define( definition : ClassDefinition = {}, staticProps? : {} ) : typeof Mixable {
         // That actually might happen when we're using @define decorator... 
         if( !this.define ){
-            log.error( "[Class.define] Class must have class extensions to use @define decorator. Use '@extendable' before @define, or extend the base class with class extensions.", definition );
+            log.error( "[Class Defininition] Class must have class extensions to use @define decorator. Use '@extendable' before @define, or extend the base class with class extensions.", definition );
             return this;
         }
 
@@ -238,7 +241,7 @@ export class Mixable {
     /** @hidden */
     static __super__ : {}
 }
-
+  
 /** @hidden */
 function toPropertyDescriptor( x : Property ) : PropertyDescriptor {
     if( x ){
@@ -322,6 +325,12 @@ const mergeFunctions : IMergeFunctions = {
         }
     },
 
+    mergeSequence( a : Function, b : Function ) : Function {
+        return function() : Object {
+            return defaults( a.call( this ), b.call( this ) );
+        }
+    },
+
     sequence( a : Function, b : Function ){
         return function() : void {
             a.apply( this, arguments );
@@ -350,18 +359,18 @@ const mergeFunctions : IMergeFunctions = {
 };
 
 /** @hidden */
-function mergeProps< T extends {} >( target : T, source : {}, rules : MixinRules = {}) : T {
+export function mergeProps< T extends {} >( target : T, source : {}, rules : MixinRules = {}) : T {
     for( let name of Object.keys( source ) ) {
         if( name === 'constructor' ) continue;
         
         const sourceProp = Object.getOwnPropertyDescriptor( source, name ),
-              destProp   = getPropertyDescriptor( target, name ); // Shouldn't be own
+              destProp   = getPropertyDescriptor( target, name ), // Shouldn't be own
+              value = destProp && destProp.value;
 
-        if( destProp ) {
-            const rule  = rules[ name ],
-                  value = destProp.value;
+        if( value != null ) {
+            const rule  = rules[ name ];
 
-            if( rule && value ) {
+            if( rule ) {
                 target[ name ] = typeof rule === 'object' ?
                     mergeObjects( value, sourceProp.value, rule ) :(
                         rule === 'merge' ?

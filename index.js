@@ -240,7 +240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        discard[arguments[i]] = true;
 	    }
 	    for (var name in source) {
-	        if (!discard[name] && source.hasOwnProperty(name)) {
+	        if (!discard.hasOwnProperty(name) && source.hasOwnProperty(name)) {
 	            dest[name] = source[name];
 	        }
 	    }
@@ -303,6 +303,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return dest;
 	}
 	exports.defaults = defaults;
+	Object.setPrototypeOf || (Object.setPrototypeOf = defaults);
 	function keys(o) {
 	    return o ? Object.keys(o) : [];
 	}
@@ -374,7 +375,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var tools_1 = __webpack_require__(1);
 	var Mixable = (function () {
 	    function Mixable() {
+	        this.initialize.apply(this, arguments);
 	    }
+	    Mixable.prototype.initialize = function () { };
 	    Mixable.create = function (a, b) {
 	        return new this(a, b);
 	    };
@@ -424,7 +427,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Mixable.define = function (definition, staticProps) {
 	        if (definition === void 0) { definition = {}; }
 	        if (!this.define) {
-	            tools_1.log.error("[Class.define] Class must have class extensions to use @define decorator. Use '@extendable' before @define, or extend the base class with class extensions.", definition);
+	            tools_1.log.error("[Class Defininition] Class must have class extensions to use @define decorator. Use '@extendable' before @define, or extend the base class with class extensions.", definition);
 	            return this;
 	        }
 	        this.predefine();
@@ -520,6 +523,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return a.call(this, b.call(this, x));
 	        };
 	    },
+	    mergeSequence: function (a, b) {
+	        return function () {
+	            return tools_1.defaults(a.call(this), b.call(this));
+	        };
+	    },
 	    sequence: function (a, b) {
 	        return function () {
 	            a.apply(this, arguments);
@@ -549,10 +557,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var name_1 = _a[_i];
 	        if (name_1 === 'constructor')
 	            continue;
-	        var sourceProp = Object.getOwnPropertyDescriptor(source, name_1), destProp = tools_1.getPropertyDescriptor(target, name_1);
-	        if (destProp) {
-	            var rule = rules[name_1], value = destProp.value;
-	            if (rule && value) {
+	        var sourceProp = Object.getOwnPropertyDescriptor(source, name_1), destProp = tools_1.getPropertyDescriptor(target, name_1), value = destProp && destProp.value;
+	        if (value != null) {
+	            var rule = rules[name_1];
+	            if (rule) {
 	                target[name_1] = typeof rule === 'object' ?
 	                    mergeObjects(value, sourceProp.value, rule) : (rule === 'merge' ?
 	                    mergeObjects(value, sourceProp.value) :
@@ -565,6 +573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return target;
 	}
+	exports.mergeProps = mergeProps;
 
 
 /***/ },
@@ -679,15 +688,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var _events = this._events;
 	                var queue = _events[name];
 	                if (queue)
-	                    _fireEventAll(queue, allArgs.splice(0, 1));
+	                    _fireEventAll(queue, allArgs.slice(1));
 	                if (queue = _events.all)
 	                    _fireEventAll(queue, allArgs);
 	        }
 	        return this;
 	    };
 	    Messenger.prototype.dispose = function () {
+	        if (this._disposed)
+	            return;
 	        this.stopListening();
 	        this.off();
+	        this._disposed = true;
 	    };
 	    Messenger = __decorate([
 	        extendable
@@ -811,7 +823,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _fireEventAll(events, a) {
 	    for (var _i = 0, events_1 = events; _i < events_1.length; _i++) {
 	        var ev = events_1[_i];
-	        ev.callback.call(ev.ctx, a);
+	        ev.callback.apply(ev.ctx, a);
 	    }
 	}
 

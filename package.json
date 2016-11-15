@@ -1,8 +1,8 @@
 {
-  "name": "object-plus",
-  "version": "0.1.0-0",
-  "description": "ES6 and TypeScript friendly mixins, events, and object tools.",
-  "main": "object-plus.js",
+  "name": "mixturejs",
+  "version": "0.9.0",
+  "description": "ES6/ES5 mixins, events, and object manipulation tools",
+  "main": "index.js",
   "directories": {
     "test": "tests"
   },

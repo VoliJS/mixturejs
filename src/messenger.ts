@@ -82,7 +82,7 @@ export abstract class Messenger implements Mixins.Mixable {
     /** Bind an event to a `callback` function. Passing `"all"` will bind
      *  the callback to all events fired.
      */
-    on(name, callback, context) : this  {
+    on(name, callback, context?) : this  {
         return <this>internalOn(this, name, callback, context);
     }
 
@@ -194,7 +194,7 @@ export abstract class Messenger implements Mixins.Mixable {
                 const { _events } = this;
                 let queue = _events[ name ];
 
-                if( queue ) _fireEventAll( queue, allArgs.splice( 0, 1 ) );
+                if( queue ) _fireEventAll( queue, allArgs.slice( 1 ) );
                 if( queue = _events.all ) _fireEventAll( queue, allArgs );                      
         }
 
@@ -205,9 +205,15 @@ export abstract class Messenger implements Mixins.Mixable {
      * Destructor. Stops messenger from listening to all objects,
      * and stop others from listening to the messenger. 
      */
+    _disposed : boolean
+
     dispose() : void {
+        if( this._disposed ) return;
+
         this.stopListening();
         this.off();
+
+        this._disposed = true;
     }
 }
 
@@ -364,5 +370,5 @@ function onceMap(map, name, callback, offer) {
 /** @hidden */
 function _fireEventAll( events : _eventsApi.EventHandler[], a ) : void {
     for( let ev of events )
-        ev.callback.call( ev.ctx, a );
+        ev.callback.apply( ev.ctx, a );
 }
