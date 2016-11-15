@@ -25,6 +25,32 @@ Just what you need when you're working in modern ES5/ES6 envorinment, packed in 
 
 Auto-generated API docs: [here](/docs/index.html)
 
+## Example
+
+```javascript
+class SomeClass {
+    a(){}
+    chained(){}
+    static b();
+}
+
+const X = {
+    chained(){}
+    c(){},
+    d : 6
+}
+
+@mixins( SomeClass, X )
+@mixinRules({
+    chained : 'sequence'
+})
+class Target {
+    // a(), c(), d
+    // static b.
+    // and chained() which will call both functions in sequence
+}
+```
+
 ## Installation
 
 `npm install mixturejs`
