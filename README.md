@@ -1,8 +1,9 @@
 # MixtureJS
 
 The toolkit combining React-style mixins, Backbone-style events, and minimal set of Underscore-style object manipulation functions.
+Written in TypeScript, works with ES5, ES6, and TypeScript.
 
-Written in TypeScript, works with ES5, ES6, and TypeScript. Just what you need when you're working in modern ES5/ES6 envorinment, and nothing more.
+Just what you need when you're working in modern ES5/ES6 envorinment, packed in API which you're already know.
 
 ## Features
 
