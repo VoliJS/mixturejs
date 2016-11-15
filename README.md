@@ -24,3 +24,7 @@ Just what you need when you're working in modern ES5/ES6 envorinment, packed in 
     - Simple logging API with variable log-level and overridable functions. Defaults to the `console`.
 
 Auto-generated API docs: [here](/docs/index.html)
+
+## Installation
+
+`npm install mixturejs`
