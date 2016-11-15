@@ -29,7 +29,8 @@ Auto-generated API docs: [here](/docs/index.html)
 
 ## Example: enabling React mixins for ES6 class components.
 
-You need to do this one time on app load.
+In a simple case, you may just import `@mixins` decorator and use it on any class. If you want to simulate behavior of the React mixins,
+you need to do something just a bit more sophisticated.
 
 ```javascript
 import React from 'react'
