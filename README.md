@@ -68,6 +68,20 @@ class EventedComponent extends React.Component {
 }
 ```
 
+## Supported Merge Rules
+
+Mixin merge rules can be defined using the `@mixinRules({ attr : rule })` class decorator. Rule is the string from the following list.
+
+- *merge* - assume property to be an object, which members taken from mixins must be merged.
+- *pipe* - property is the function `( x : T ) => T` transforming the value. Multiple functions joined in pipe.
+- *sequence* - property is the function. Multiple functions will be called in sequence.
+- *reverse* - same as *sequence*, but functions called in reverse sequence.
+- *mergeSequence* - merge the object returned by functions, executing them in sequence.
+- *every* - property is the function `( ...args : any[] ) => boolean`. Resulting method will return true if every single function returns true.
+- *some* - same as previous, but method will return true when at least one function returns true.
+
+If merge rule is an object, the corresponding member is expected to be an object and the rule defines the merge rules for its members.
+
 ## Installation
 
 `npm install mixturejs`
