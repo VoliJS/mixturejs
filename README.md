@@ -2,10 +2,43 @@
 
 Mixins is very powerful abstraction addressing cross-cutting concerns, which can dramatically simplify inheritance graph when used wisely.
 
-The toolkit combining React-style mixins, Backbone-style events, and minimal set of Underscore-style object manipulation functions.
+MixtureJS is the toolkit combining React-style mixins, Backbone-style events, and minimal set of Underscore-style object manipulation functions. Just what you need when you're working in modern ES5/ES6 envorinment, packed in API which you already know.
+
 Written in TypeScript, works with ES5, ES6, and TypeScript.
 
-Just what you need when you're working in modern ES5/ES6 envorinment, packed in API which you already know.
+## Events Performance and BackboneJS compatibility 
+
+Athough MixtureJS _implements_ [Backbone API for Events](http://backbonejs.org/#Events) for events, implementation is different.
+Event subscription is abour 4 times faster in all browsers, and event triggering is 4.5 times faster in IE.
+
+Features of [Backbone Events API](http://backbonejs.org/#Events) which are _not_ supported:
+
+- `source.trigger( 'ev1 ev2 ev3' )` is not supported. Use `source.trigger( 'ev1' ).trigger( 'ev2' ).trigger( 'ev3' )` instead.
+- `source.trigger( 'ev', a, b, ... )` doesn't support more than 5 event parameters.
+- `source.on( 'ev', callback )` - callback will _not_ be called in the context of `source` by default.
+
+That's it. Other stuff works.
+
+Chrome:
+
+|| Test || BackboneJS 1.2 || MixtureJS || Improvement ||
+| on/off | 4.6 sec |  1.2 sec | x3.8 faster |
+| trigger | 0.16 sec |  0.12 sec | same |
+| listenTo/stopListening | 21 sec |  5 sec | x4.2 faster |
+
+Firefox: 
+
+|| Test || BackboneJS 1.2 || MixtureJS || Improvement ||
+| on/off | 5.5 sec |  1.4 sec | x3.9 faster |
+| trigger | 0.16 sec |  0.16 sec | same |
+| listenTo/stopListening | 34 sec |  7.5 sec | x4.5 faster |
+
+IE11:
+
+|| Test || BackboneJS 1.2 || MixtureJS || Improvement ||
+| on/off | 19.8 sec |  4.9 sec | x4.0 faster |
+| trigger | 4.5 sec |  1.0 sec | x4.5 faster |
+| listenTo/stopListening | 48.4 sec |  12.9 sec | x3.75 faster |
 
 ## Features
 
