@@ -64,8 +64,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	__export(__webpack_require__(3));
 	var eventsApi = __webpack_require__(4);
 	exports.eventsApi = eventsApi;
-	var mixins_2 = __webpack_require__(2);
-	Object.extend = function (protoProps, staticProps) { return mixins_2.Mixable.extend(protoProps, staticProps); };
+	var mixins_1 = __webpack_require__(2);
+	Object.extend = function (protoProps, staticProps) { return mixins_1.Mixable.extend(protoProps, staticProps); };
 	Object.assign || (Object.assign = tools.assign);
 	Object.log = tools.log;
 
@@ -106,7 +106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Log.prototype.error = function () {
 	        var args = [];
 	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i - 0] = arguments[_i];
+	            args[_i] = arguments[_i];
 	        }
 	        if (this.level > 0)
 	            this.doLogging('error', args);
@@ -114,7 +114,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Log.prototype.warn = function () {
 	        var args = [];
 	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i - 0] = arguments[_i];
+	            args[_i] = arguments[_i];
 	        }
 	        if (this.level > 1)
 	            this.doLogging('warn', args);
@@ -122,7 +122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Log.prototype.info = function () {
 	        var args = [];
 	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i - 0] = arguments[_i];
+	            args[_i] = arguments[_i];
 	        }
 	        if (this.level > 2)
 	            this.doLogging('info', args);
@@ -130,7 +130,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Log.prototype.debug = function () {
 	        var args = [];
 	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i - 0] = arguments[_i];
+	            args[_i] = arguments[_i];
 	        }
 	        if (this.level > 3)
 	            this.doLogging('debug', args);
@@ -384,7 +384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Mixable.mixins = function () {
 	        var mixins = [];
 	        for (var _i = 0; _i < arguments.length; _i++) {
-	            mixins[_i - 0] = arguments[_i];
+	            mixins[_i] = arguments[_i];
 	        }
 	        var proto = this.prototype, mergeRules = this._mixinRules || {}, _appliedMixins = this._appliedMixins = (this._appliedMixins || []).slice();
 	        for (var _a = 0, mixins_1 = mixins; _a < mixins_1.length; _a++) {
@@ -408,7 +408,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Mixable.mixTo = function () {
 	        var args = [];
 	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i - 0] = arguments[_i];
+	            args[_i] = arguments[_i];
 	        }
 	        for (var _a = 0, args_1 = args; _a < args_1.length; _a++) {
 	            var Ctor = args_1[_a];
@@ -450,7 +450,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            Subclass = (function (_super) {
 	                __extends(_Subclass, _super);
 	                function _Subclass() {
-	                    _super.apply(this, arguments);
+	                    return _super.apply(this, arguments) || this;
 	                }
 	                return _Subclass;
 	            }(this));
@@ -465,9 +465,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.__super__ = BaseClass.prototype;
 	        return this;
 	    };
-	    Mixable._mixinRules = { properties: 'merge' };
 	    return Mixable;
 	}());
+	Mixable._mixinRules = { properties: 'merge' };
 	exports.Mixable = Mixable;
 	function toPropertyDescriptor(x) {
 	    if (x) {
@@ -481,7 +481,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function mixins() {
 	    var list = [];
 	    for (var _i = 0; _i < arguments.length; _i++) {
-	        list[_i - 0] = arguments[_i];
+	        list[_i] = arguments[_i];
 	    }
 	    return createDecorator('mixins', list);
 	}
@@ -601,7 +601,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function uniqueId() {
 	    return 'l' + _idCount++;
 	}
-	var Messenger = (function () {
+	var Messenger = Messenger_1 = (function () {
 	    function Messenger() {
 	        this._events = void 0;
 	        this._listeningTo = void 0;
@@ -695,11 +695,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.off();
 	        this._disposed = true;
 	    };
-	    Messenger = __decorate([
-	        extendable
-	    ], Messenger);
 	    return Messenger;
 	}());
+	Messenger = Messenger_1 = __decorate([
+	    extendable
+	], Messenger);
 	exports.Messenger = Messenger;
 	var slice = Array.prototype.slice;
 	exports.Events = tools_1.omit(Messenger.prototype, 'constructor', 'initialize');
@@ -707,6 +707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var listeningTo = listener._listeningTo || (listener._listeningTo = Object.create(null)), cid = source.cid || (source.cid = uniqueId());
 	    listeningTo[cid] = source;
 	}
+	var Messenger_1;
 
 
 /***/ },
