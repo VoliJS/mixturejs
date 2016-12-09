@@ -21,21 +21,24 @@ That's it. Other stuff works.
 
 Chrome:
 
-|| Test || BackboneJS 1.2 || MixtureJS || Improvement ||
+| Test | BackboneJS 1.2 | MixtureJS | Improvement |
+|------|----------------|-----------|-------------|
 | on/off | 4.6 sec |  1.2 sec | x3.8 faster |
 | trigger | 0.16 sec |  0.12 sec | same |
 | listenTo/stopListening | 21 sec |  5 sec | x4.2 faster |
 
 Firefox: 
 
-|| Test || BackboneJS 1.2 || MixtureJS || Improvement ||
+| Test | BackboneJS 1.2 | MixtureJS | Improvement |
+|------|----------------|-----------|-------------|
 | on/off | 5.5 sec |  1.4 sec | x3.9 faster |
 | trigger | 0.16 sec |  0.16 sec | same |
 | listenTo/stopListening | 34 sec |  7.5 sec | x4.5 faster |
 
 IE11:
 
-|| Test || BackboneJS 1.2 || MixtureJS || Improvement ||
+| Test | BackboneJS 1.2 | MixtureJS | Improvement |
+|------|----------------|-----------|-------------|
 | on/off | 19.8 sec |  4.9 sec | x4.0 faster |
 | trigger | 4.5 sec |  1.0 sec | x4.5 faster |
 | listenTo/stopListening | 48.4 sec |  12.9 sec | x3.75 faster |
