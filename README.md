@@ -8,7 +8,7 @@ Written in TypeScript, works with ES5, ES6, and TypeScript.
 
 ## Events Performance and BackboneJS compatibility 
 
-Athough MixtureJS _implements_ [Backbone API for Events](http://backbonejs.org/#Events) for events, implementation is different.
+MixtureJS _implements_ [Backbone API for Events](http://backbonejs.org/#Events), but internally it's entirely different.
 Event subscription is abour 4 times faster in all browsers, and event triggering is 4.5 times faster in IE.
 
 Features of [Backbone Events API](http://backbonejs.org/#Events) which are _not_ supported:
