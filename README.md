@@ -8,7 +8,8 @@ Written in TypeScript, works with ES5, ES6, and TypeScript.
 
 ## Events Performance and BackboneJS compatibility 
 
-MixtureJS _implements_ [Backbone API for Events](http://backbonejs.org/#Events), but internally it's entirely different.
+MixtureJS _implements_ [Backbone API for Events](http://backbonejs.org/#Events), but internally it's entirely different. Here's the results of the typical
+run of the [performance tests](/tests) enclosed.
 
 ![performance](/perf-chart.jpg)
 
