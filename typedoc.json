@@ -1,6 +1,6 @@
 {
   "mode": "file",
-  "out": "doc",
+  "out": "docs",
   "theme": "minimal",
   "ignoreCompilerErrors": "true",
   "experimentalDecorators": "true",
