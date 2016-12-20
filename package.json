@@ -1,6 +1,6 @@
 {
   "name": "mixturejs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ES6/ES5 mixins, events, and object manipulation tools",
   "main": "index.js",
   "directories": {
