@@ -651,20 +651,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Messenger.prototype.trigger = function (name, a, b, c, d, e) {
 	        if (d !== void 0 || e !== void 0)
 	            trigger5(this, name, a, b, c, d, e);
-	        if (c !== void 0)
+	        else if (c !== void 0)
 	            trigger3(this, name, a, b, c);
 	        else
 	            trigger2(this, name, a, b);
 	        return this;
 	    };
 	    Messenger.prototype.listenTo = function (source, a, b) {
-	        addReference(this, source);
-	        source.on(a, !b && typeof a === 'object' ? this : b, this);
+	        if (source) {
+	            addReference(this, source);
+	            source.on(a, !b && typeof a === 'object' ? this : b, this);
+	        }
 	        return this;
 	    };
 	    Messenger.prototype.listenToOnce = function (source, a, b) {
-	        addReference(this, source);
-	        source.once(a, !b && typeof a === 'object' ? this : b, this);
+	        if (source) {
+	            addReference(this, source);
+	            source.once(a, !b && typeof a === 'object' ? this : b, this);
+	        }
 	        return this;
 	    };
 	    Messenger.prototype.stopListening = function (a_source, a, b) {
@@ -679,7 +683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    source.off(a, second, this);
 	                }
 	            }
-	            else {
+	            else if (a_source === void 0) {
 	                for (var cid in _listeningTo)
 	                    _listeningTo[cid].off(a, second, this);
 	                if (removeAll)

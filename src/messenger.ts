@@ -109,21 +109,25 @@ export abstract class Messenger implements Mixins.Mixable, EventSource {
     // receive the true name of the event as the first argument).
     trigger(name : string, a?, b?, c?, d?, e? ) : this {
         if( d !== void 0 || e !== void 0 ) trigger5( this, name, a, b, c, d, e );
-        if( c !== void 0 ) trigger3( this, name, a, b, c );
+        else if( c !== void 0 ) trigger3( this, name, a, b, c );
         else trigger2( this, name, a, b );
         return this;
     }
 
     listenTo( source : Messenger, a : string | CallbacksByEvents, b? : Function ) : this {
-        addReference( this, source );
-        source.on( a, !b && typeof a === 'object' ? this : b, this );
+        if( source ){
+            addReference( this, source );
+            source.on( a, !b && typeof a === 'object' ? this : b, this );
+        }
 
         return this;
     }
 
     listenToOnce( source : Messenger, a : string | CallbacksByEvents, b? : Function ) : this {
-        addReference( this, source );
-        source.once( a, !b && typeof a === 'object' ? this : b, this );
+        if( source ){
+            addReference( this, source );
+            source.once( a, !b && typeof a === 'object' ? this : b, this );
+        }
 
         return this;
     }
@@ -141,7 +145,7 @@ export abstract class Messenger implements Mixins.Mixable, EventSource {
                     source.off( a, second, this );
                 }
             }
-            else{
+            else if( a_source === void 0 ){
                 for( let cid in _listeningTo ) _listeningTo[ cid ].off( a, second, this );
 
                 if( removeAll ) ( this._listeningTo = void 0 );
