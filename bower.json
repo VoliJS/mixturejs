@@ -1,0 +1,23 @@
+{
+  "name": "mixturejs",
+  "description": "ES6/ES5 mixins, events, and object manipulation tools",
+  "main": "index.js",
+  "authors": [
+    "Vlad Balin"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "mixins",
+    "react",
+    "events",
+    "backbone"
+  ],
+  "homepage": "http://volicon.github.io/mixturejs/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
